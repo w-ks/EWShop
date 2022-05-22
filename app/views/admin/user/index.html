@@ -1,0 +1,98 @@
+{% include("public/header.html") %}
+
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">会员列表</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="search">
+		<div class="fr searbox">
+			<form method="get" action="/admin/user">
+
+				用户名：<input type="text" name="name" value="{{get.name}}" class="inputtext inputtext_150" />
+				联系电话：<input type="text" name="phone" value="{{get.phone}}" class="inputtext inputtext_150" />
+				常用邮箱：<input type="text" name="email" value="{{get.email}}" class="inputtext inputtext_150" />
+				<select name="orderby" class="inputselect">
+					<option value="" {{get.orderby == '' ? 'selected' : ''}}>默认排序</option>
+					<option value="ltime" {{get.orderby == 'ltime' ? 'selected' : ''}}>最近登录</option>
+				</select>
+				<input type="submit" value="搜索" class="input2  tjbtn" />
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+			<tr>
+				<td class="bgtt" width="10"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" />
+				</td>
+				<td class="bgtt" width="50">ID号</td>
+				<td class="bgtt">用户名</td>
+				<td class="bgtt" width="120">联系电话</td>
+				<td class="bgtt" width="180">常用邮箱</td>
+				<td class="bgtt" width="80">注册日期</td>
+				<td class="bgtt" width="120">上次登录</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+			{% for v in data %}
+
+			<tr>
+				<td><input type="checkbox" name="id[]" value="{{v.id}}"></td>
+				<td>{{v.id}}</td>
+				<td>{{v.name}}</td>
+				<td>{{v.phone}}</td>
+				<td>{{v.email}}</td>
+				<td><span>{{v.atime|date('Y-m-d H:i')}}</span></td>
+				<td><span>{{v.ltime|date('Y-m-d H:i')}}</span></td>
+				<td>
+					<a href="/admin/user/mod/{{v.id}}" class="admin_edit mar3">修改</a>
+					<a href="/admin/user/del/{{v.id}}" class="admin_del"
+						onclick="return confirm('确定要删除会员{{v.name}}吗？')">删除</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+			<tr>
+				<td class="bgtt"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" /></td>
+				<td class="bgtt aleft" colspan="2">
+					<span class="fl"><button href="/admin/user/alldel"
+							onclick="return bro_cfall(this, 'id', 'form', '批量删除')">批量删除</button></span>
+
+				</td>
+				<td class="bgtt" style="text-align: right" colspan="5">
+					<style>
+						ul.pagination {
+							margin-top: 5px;
+							display: inline-block;
+						}
+
+						.pagination li {
+							padding: 2px 10px;
+							float: left;
+							margin: 0 5px;
+							background: white;
+						}
+
+						.pagination .active {
+							background: lightskyblue;
+						}
+					</style>
+
+					{% autoescape false %}
+					{{fpage}}
+					{% endautoescape %}
+
+
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+{% include("public/footer.html") %}

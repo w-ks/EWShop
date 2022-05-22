@@ -1,0 +1,73 @@
+{% include("public/header.html") %}
+<div class="right">
+    <div class="admin_l">
+        <div class="admin_t_info">
+            <h3>系统信息</h3>
+            <div class="banben">
+                <div class="fl font14 mat6">
+                    <p>软件版本：<a href="#" target="_blank" class="cgreen">EWShop1.0教学版</a><span
+                            class="font13 mal5 corg">(证书编号：<span id="license_num">无</span>)</span> </p>
+
+                    <p>开发团队：<u><a target="_blank" href="#" class="c666">个人</a></u></p>
+                    <p>邮箱：<u style="font-family:'宋体'" class="c666">2688631078@qq.com</u></p>
+                    <p>Q Q：<u><a href="#" target="_blank" class="c666">2688631078</a></u></p>
+
+                </div>
+
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="admin_t_info admin_t_info1 mat10">
+            <h3>商品统计</h3>
+            <ul>
+                <li><a href="/admin/product?state=1" target="_blank">上架商品</a><span
+                        class="strong cgreen num">{{product_up}}</span>件</li>
+                <li><a href="/admin/product?state=0" target="_blank">下架商品</a><span
+                        class="strong cgreen num">{{product_down}}</span>件</li>
+                <li><a href="/admin/product?state=1&filter=num|0" target="_blank">缺货商品</a><span
+                        class="strong cgreen num">{{product_empty}}</span>件</li>
+                <li style="border-bottom:0"><a href="/admin/product?state=1&filter=istuijian|1"
+                        target="_blank">推荐商品</a><span class="strong cgreen num">{{product_recommend}}</span>件</li>
+            </ul>
+        </div>
+        <div class="admin_t_info admin_t_info1 mat10 mal10">
+            <h3>访客统计</h3>
+            <ul>
+                <li><a href="#" target="_blank">今日访客</a><span class="strong cgreen num">{{iplog_today}}</span>人</li>
+                <li><a href="#" target="_blank">昨日访客</a><span class="strong cgreen num">{{iplog_yesterday}}</span>人</li>
+                <li><a href="#" target="_blank">累计访客</a><span class="strong cgreen num">{{iplog_all}}</span>人</li>
+                <li style="border-bottom:0"><a href="/admin/user" target="_blank">累计注册</a><span
+                        class="strong cgreen num">{{iplog_user}}</span>人</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="admin_t_info mat10">
+            <h3>交易数据</h3>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="bg01" width="120"></td>
+                    <td class="bg01" width="350">订单总数</td>
+                    <td class="bg01">订单总额</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">今日订单</td>
+                    <td class="strong num cgreen font14">{{order_today}}个</td>
+                    <td class="strong num cred font14">￥{{money_today}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">昨日订单</td>
+                    <td class="strong num cgreen font14">{{order_yesterday}}个</td>
+                    <td class="strong num cred font14">￥{{money_yesterday}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align:right">全部订单</td>
+                    <td class="strong num cgreen font14">{{order_all}}个</td>
+                    <td class="strong num cred font14">￥{{money_all}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% include('public/footer.html') %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;IE=edge;" charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ewshop后台管理 - {{title}}</title>
+    <link type="text/css" rel="stylesheet" href="{{url}}/css/style.css" />
+    <script type="text/javascript" src="{{public}}/js/jquery.js"></script>
+    <script type="text/javascript" src="{{public}}/js/global.js"></script>
+</head>
+<div class="bgimg"></div>
+<div class="pagetop">
+    <div class="head">
+        <div class="logo fl"><img src="{{url}}/images/logo.png" /></div>
+
+        <div class="admin_t fr">
+            <ul>
+                <li><a href="/"><img border=0 src="{{url}}/images/exit4.gif"></a></li>
+                <li><a href="/admin/login/logout" onclick="return confirm('你确定要退出系统吗？')">
+                        <img border=0 src="{{url}}/images/exit3.gif"></a></li>
+            </ul>
+        </div>
+
+        <div class="admin_u fr">
+            <b>欢迎您-</b><a title="" target="_top"
+                href="/admin/adminuser/mod/{{session.id}}">{{session.name}}</a>&nbsp;【超级管理员】 &nbsp;&nbsp;
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="content">
+    <div class="main">
+        <div class="left">
+            <div class="fenlei">
+                <h3>商品管理</h3>
+                <ul>
+
+                    <li {% if menumark=='category' %} class="sel" {% endif %}><a href="/admin/category">商品分类</a></li>
+
+                    <li {% if menumark=='product' %} class="sel" {% endif %}><a href="/admin/product">商品列表</a></li>
+
+                    <li {% if menumark=='ask' %} class="sel" {% endif %}><a href="/admin/ask">商品咨询</a></li>
+
+                    <li {% if menumark=='comment' %} class="sel" {% endif %}><a href="/admin/comment">商品评价</a></li>
+                </ul>
+            </div>
+            <div class="fenlei">
+                <h3>交易管理</h3>
+                <ul>
+
+                    <li {% if menumark=='order' %} class="sel" {% endif %}><a href="/admin/order">订单管理</a></li>
+
+                    <li {% if menumark=='payway' %} class="sel" {% endif %}><a href="/admin/payway">支付方式</a></li>
+                </ul>
+            </div>
+            <div class="fenlei">
+                <h3>信息管理</h3>
+                <ul>
+
+                    <li {% if menumark=='aclass' %} class="sel" {% endif %}><a href="/admin/aclass">文章分类</a></li>
+
+                    <li {% if menumark=='article' %} class="sel" {% endif %}><a href="/admin/article?cid=0">文章列表</a>
+                    </li>
+
+                    <li {% if menumark=='page' %} class="sel" {% endif %}><a href="/admin/page">单页列表</a></li>
+                </ul>
+            </div>
+            <div class="fenlei">
+                <h3>用户管理</h3>
+                <ul>
+
+                    <li {% if menumark=='user' %} class="sel" {% endif %}><a href="/admin/user">会员列表</a></li>
+
+                    <li {% if menumark=='adminuser' %} class="sel" {% endif %}><a href="/admin/adminuser">管理列表</a></li>
+                </ul>
+            </div>
+            <div class="fenlei">
+                <h3>控制面板</h3>
+                <ul>
+
+                    <li {% if menumark=='setting' %} class="sel" {% endif %}><a href="/admin/setting">基本信息</a></li>
+
+                    <li {% if menumark=='link' %} class="sel" {% endif %}><a href="/admin/link">友情链接</a></li>
+
+                    <li {% if menumark=='ad' %} class="sel" {% endif %}><a href="/admin/ad">广告列表</a></li>
+                </ul>
+            </div>
+        </div>

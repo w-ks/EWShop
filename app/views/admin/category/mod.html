@@ -1,0 +1,51 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">修改商品分类</span>
+			<span class="fr fabu"><a href="/admin/category/add">增加分类</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" action="/admin/category/doupdate">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+			<tr>
+				<input type="hidden" name="id" value="{{id}}">
+				<input type="hidden" name="childs" value="{{childs}}">
+				<td class="bg_f8" align="right" width="100">分类名称：</td>
+				<td><input type="text" name="catname" value="{{catname}}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">上级分类：</td>
+				<td>
+					<select name="pid" class="inputall">
+						<option value="0" {% if pid == 0 %} selected {% endif %}>--根分类--</option>
+
+						{% for v in cattree %}
+						<option value="{{v.id}}" {% if pid == v.id %} selected {% endif %}>
+							{% for i in 0..v.level*8 %}
+							&nbsp;
+							{% endfor %}
+							|--{{v.catname}}
+						</option>
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">分类排序：</td>
+				<td><input type="text" name="ord" value="{{ord}}" class="inputall input80" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8">&nbsp;</td>
+				<td><input type="submit" value="提 交" class="tjbtn" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{% include("public/footer.html") %}

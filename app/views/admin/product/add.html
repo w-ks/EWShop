@@ -1,0 +1,98 @@
+{% include("public/header.html") %}
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">增加商品</span>
+			<span class="fr fabu"><a href="/admin/product/add">发布商品</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" enctype="multipart/form-data">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+			<!-- input type="hidden" name="id" value="" -->
+			<tr>
+				<td width="100" class="bg_f8" align="right">商品名称：</td>
+				<td colspan="3"><input type="text" name="name" value="" class="inputall input500" maxlength="36" /></td>
+				<td rowspan="7" valign="top" width="80">
+					<img src="{{res}}/nopic.gif" width="160" height="170"
+						style="border:1px solid #ddd; display:block;" />
+					<p class="mat5"><input type="file" name="logo" size="12" style="width:160px;" /></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">商品分类：</td>
+				<td colspan="3">
+					<select name="cid" class="inputall">
+						<option value="0" selected>--根分类--</option>
+		
+						{% for v in cattree %}
+						<option value="{{v.id}}">
+							{% for i in 0..v.level*4 %}
+							&nbsp;
+							{% endfor %}
+							|--{{v.catname}}
+						</option>
+						{% endfor %}
+
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">本店价格：</td>
+				<td width="250"><input type="text" name="money" value="" class="inputall input100" /> <span
+						class="c888">元</span></td>
+				<td width="100" class="bg_f8" align="right">运　　费：</td>
+				<td><input type="text" name="wlmoney" value="" class="inputall input100" /> <span
+						class="c888">元（注：0元为卖家包邮）</span></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">市场售价：</td>
+				<td width="250"><input type="text" name="smoney" value="" class="inputall input100" /> <span
+						class="c888">元</span></td>
+				<td width="100" class="bg_f8" align="right">特价商品：</td>
+				<td><input type="checkbox" name="istj" value="1" /></td>
+			</tr>
+
+			<tr>
+				<td class="bg_f8" align="right">商品货号：</td>
+				<td colspan="3"><input type="text" name="mark" value="" class="inputall input100" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">库存总量：</td>
+				<td colspan="3"><input type="text" name="num" value="" class="inputall input100" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">发布日期：</td>
+				<td colspan="3"><input type="text" name="atime" class="inputall input200" placeholder="请选择日期" id="date">
+				</td>
+			</tr>
+		</table>
+		<div class="mat5">
+			<textarea name="content" id="edit_body" class="form-control float-left col-9" placeholder="" rows="4"
+				resize="none">商品介绍</textarea>
+
+			<script src="{{public}}/js/tinymce/tinymce.min.js"></script>
+
+			<script src="{{public}}/js/fwb.js"></script>
+
+		</div>
+		<div class="mat10 center">
+			<input type="submit" name="do_submit" value="提 交" class="tjbtn" />
+		</div>
+	</form>
+</div>
+
+<script src="{{public}}/js/laydate.js"></script>
+<script>
+	lay('#version').html('-v' + laydate.v);
+
+	//执行一个laydate实例
+	laydate.render({
+		elem: '#date' //指定元素
+	});
+</script>
+
+{% include("public/footer.html") %}

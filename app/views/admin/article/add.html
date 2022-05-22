@@ -1,0 +1,66 @@
+{% include("public/header.html") %}
+
+
+
+		<div class="right">
+			<div class="now">
+				<div class="now_l"></div>
+				<div class="now_m">
+					<span class="fl">发布文章</span>
+					<span class="fr fabu"><a href="/admin/article/add">发布文章</a></span>
+				</div>
+				<div class="now_r"></div>
+				<div class="clear"></div>
+			</div>
+			<form method="post">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+					<input type="hidden" name="id" value="" />
+					<tr>
+						<td class="bg_f8" align="right" width="100">文章名称：</td>
+						<td><input type="text" name="name" value="" class="inputall input500" /></td>
+					</tr>
+					<tr>
+						<td class="bg_f8" align="right">文章分类：</td>
+						<td>
+							<select name="cid" class="inputselect">
+								<option  value="1" >网站公告</option>
+								<option  value="6" >本店咨询</option>
+								<option  value="7" >推荐图书</option>
+								<option  value="8" >商家招募</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="bg_f8" align="right">发布日期：</td>
+						<td>
+							<input type="text" name="atime" class="inputall input200" placeholder="请选择日期" id="date">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<textarea name="content" id="edit_body" class="form-control float-left col-9" placeholder="" rows="4" resize="none">文章内容</textarea>
+
+							<script src="{{public}}/js/tinymce/tinymce.min.js"></script>
+
+							<script src="{{public}}/js/fwb.js"></script>
+
+						</td>
+					</tr>
+				</table>
+				<div class="mat10 center"><input type="submit" name="do_submit" value="提 交" class="tjbtn" /></div>
+			</form>
+		</div>
+
+
+		<script src="{{public}}/js/laydate.js"></script>
+		<script>
+			lay('#version').html('-v'+ laydate.v);
+
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#date' //指定元素
+			});
+		</script>
+
+{% include("public/footer.html") %}
+

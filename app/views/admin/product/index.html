@@ -1,0 +1,159 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">商品列表</span>
+			<span class="fr fabu"><a href="/admin/product/add">发布商品</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="search">
+		<div class="fl qiehuan">
+			<a href="/admin/product?state=1" {% if get.state == 1 %} class="sel" {% endif %}>出售中商品</a>
+			| <a href="/admin/product?state=0" {% if get.state == '0' %} class="sel" {% endif %}>下架的商品</a>
+		</div>
+		<div class="fr searbox" id="">
+			<form method="get" action="/admin/product?">
+				<input type="hidden" name="state" value="{{get.state}}">
+
+				商品名称：<input type="text" name="name" value="{{get.name}}" class="inputtext" />
+				<select name="cid" class="inputselect">
+					<option value="0" {% if get.cid == 0 %} selected {% endif %}>--根分类--</option>
+
+					{% for v in cattree %}
+					<option value="{{v.id}}" {% if get.cid == v.id %} selected {% endif %}>
+						{% for i in 0..v.level*4 %}
+						&nbsp;
+						{% endfor %}
+						|--{{v.catname}}
+					</option>
+					{% endfor %}
+
+				</select>
+
+				<select name="filter" class="inputselect">
+					<option value="">全部商品</option>
+					{% for k,v in filter_arr %}
+					<option value="{{k}}" {% if get.filter == k %} selected {% endif %}>{{v}}</option>
+					{% endfor %}
+				</select>
+
+				<select name="orderby" class="inputselect">
+					<option value="">默认排序</option>
+					{% for k,v in orderby_arr %}
+
+					<option value="{{k}}" {% if get.orderby == k %} selected {% endif %}> {{v}} </option>
+
+					{% endfor %}
+
+				</select>
+
+				<input type="submit" value="搜索" class="input2  tjbtn" />
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" id="form">
+		<table border="0" cellspacing="0" cellpadding="0" class="list">
+			<tr>
+				<td class="bgtt" width="10"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" />
+				</td>
+				<td class="bgtt" width="50">ID号</td>
+				<td class="bgtt" style="text-align: left">商品名称</td>
+				<td class="bgtt" width="80">商品分类</td>
+				<td class="bgtt" width="80">单价(元)</td>
+				<td class="bgtt" width="80">售出/库存</td>
+				<td class="bgtt" width="50">浏览</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+
+			{% for v in data %}
+
+
+			<tr>
+				<td><input type="checkbox" name="id[]" value="{{v.id}}" /></td>
+				<td>{{v.id}}</td>
+				<td class="aleft">
+					<span class="fl mar5" style="border:1px solid #ddd">
+						<img src="{{res}}/product/{{v.logo}}" width="45" height="45">
+					</span>
+					<a class="cblue" href="/product/{{v.id}}" target="_blank">{{v.name}}</a>
+					{% if v.istuijian %}
+					<span class="cred">[荐]</span>
+					{% endif %}
+
+					{% if v.istj %}
+					<span class="cgreen">[特]</span> 
+					{% endif %}
+
+				</td>
+				<td class="font13">{{cattree[v.cid].catname}}</td>
+				<td><span class="num font16 cred strong">{{v.money}}</span></td>
+				<td><span class="font14 corg num strong">{{v.sellnum}}</span>/{{v.num}}</td>
+				<td>{{v.clicknum}}</td>
+				<td>
+					<a href="/admin/product/mod/{{v.id}}" class="admin_edit mar3">修改</a>
+					<a href="/admin/product/del/{{v.id}}" class="admin_del" onclick="confirm('你确定要删除 {{v.name}}第4版 吗？')">删除</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+
+
+			<tr>
+				<td class="bgtt"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" /></td>
+				<td class="bgtt" colspan="8">
+					<span class="fl">
+						<button href="/admin/product/alldel"
+							onclick="return bro_cfall(this, 'id', 'form', '批量删除')">批量删除</button>
+						<button href="/admin/product/state/1"
+							onclick="return bro_cfall(this, 'id', 'form', '批量上架')">批量上架</button>
+						<button href="/admin/product/state/0"
+							onclick="return bro_cfall(this, 'id', 'form', '批量下架')">批量下架</button>
+						<button href="/admin/product/tuijian/1"
+							onclick="return bro_cfall(this, 'id', 'form', '批量推荐')">批量推荐</button>
+						<button href="/admin/product/tuijian/0"
+							onclick="return bro_cfall(this, 'id', 'form', '取消推荐')">取消推荐</button>
+					</span>
+				</td>
+
+
+
+			</tr>
+			<style>
+				ul.pagination {
+					display: inline-block;
+				}
+
+				.pagination li {
+					padding: 2px 10px;
+					float: left;
+					text-align: center;
+					margin: 0 5px;
+					background: #cccccc;
+				}
+
+				.pagination .active {
+					background: lightskyblue;
+				}
+			</style>
+			<tr>
+				<td style="text-align:center;padding-top:50px;" colspan="9">
+
+					{% autoescape false %}
+					{{fpage}}
+					{% endautoescape %}
+
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+{% include("public/footer.html") %}

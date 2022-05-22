@@ -1,0 +1,15 @@
+#实现所有url都走index.php文件
+#重写引擎
+RewriteEngine On 
+#从根目录开始
+RewriteBase /
+#允许存在时访问文件和目录有效
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#所有的以css|\.js|\.png|\.gif|\.jpg|\.jpeg 结尾的文件不走默认路由
+RewriteCond %{REQUEST_URI} !^.*(\.css|\.js|\.png|\.gif|\.jpg|\.jpeg)
+
+#重写路由规则，域名后任意字符都请求index.php?(将请求url变为参数)
+#例如请求127.0.0.1:8012/user/add => 127.0.0.1:8012/index.php?user/add
+RewriteRule ^(.*)$ index.php?$1 [QSA,L]

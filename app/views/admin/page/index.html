@@ -1,0 +1,44 @@
+{% include("public/header.html") %}
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">单页列表</span>
+			<span class="fr fabu"><a href="/admin/page/add">增加单页</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form action="/admin/page/order" method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list mat5">
+			<tr>
+				<td class="bgtt" width="50">ID号</td>
+				<td class="bgtt" width="50">排序</td>
+				<td class="bgtt">单页名称</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+			{% for v in data %}
+			<tr>
+				<td>{{v.id}}</td>
+				<td><input type="text" name="ord[{{v.id}}]" value="{{v.ord}}" class="inputtext input40" /></td>
+				<td><a href="/page/{{v.id}}" target="_blank">{{v.name}}</a></td>
+				<td>
+					<a href="/admin/page/mod/{{v.id}}" class="admin_edit mar3">修改</a>
+					<a href="/admin/page/del/{{v.id}}" class="admin_del" onclick="return confirm('你确定要删除吗？')">删除</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+
+			<tr>
+				<td class="bgtt aleft" colspan="5"><input type="submit" name="do_submit" value="批量排序" class="tjbtn">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+{% include("public/footer.html") %}

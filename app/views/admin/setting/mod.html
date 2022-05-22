@@ -1,0 +1,60 @@
+{% include("public/header.html") %}
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">基本信息</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" enctype="multipart/form-data" action="/admin/setting/doupdate">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+			<tr>
+				<td class="bg_f8" align="right" width="100">网站标题：</td>
+				<td><input type="text" name="web_title" value="{{web_title}}" class="inputall input500" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">关 键 词：</td>
+				<td><input type="text" name="web_keywords" value="{{web_keywords}}" class="inputall input500" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">网站描述：</td>
+				<td><textarea name="web_description" style="width:500px;height:100px;">{{web_description}}</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">网站LOGO：</td>
+				<td>
+					<p class="mab5"><img src="{{res}}/{{web_logo}}" height="60" style="border:1px solid #ddd" /></p>
+					<p><input type="file" name="web_logo" /></p>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="bg_f8" align="right">咨询热线：</td>
+				<td><input type="text" name="web_phone" value="{{web_phone}}" class="inputall input500" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">咨询 Q Q：</td>
+				<td><input type="text" name="web_qq" value="{{web_qq}}" class="inputall input500" /><span
+						class="c888">（多个请用“,”隔开）</span></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">版权所有：</td>
+				<td><input type="text" name="web_copyright" value="{{web_copyright}}" class="inputall input500" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">备 案 号：</td>
+				<td><input type="text" name="web_icp" value="{{web_icp}}" class="inputall input500" /></td>
+			</tr>
+
+
+			<tr>
+				<td class="bg_f8">&nbsp;</td>
+				<td><input type="submit" value="提 交" class="tjbtn"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{% include("public/footer.html") %}

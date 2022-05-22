@@ -1,0 +1,48 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">广告列表</span>
+			<span class="fr fabu"><a href="/admin/ad/add">增加广告</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form action="/admin/ad/order" method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list mat5">
+			<tr>
+				<td class="bgtt" width="50">ID号</td>
+				<td class="bgtt" width="50">排序</td>
+				<td class="bgtt">广告图片</td>
+				<td class="bgtt" width="250">广告位置</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+			{% for item in data %}
+
+			<tr height="60">
+				<td>{{item.id}}</td>
+				<td><input type="text" name="ord[{{item.id}}]" value="{{item.ord}}" class="inputtext input40" /></td>
+				<td><a href="" target="_blank"><img src="{{res}}/ad/{{item.logo}}" width="400" /></a></td>
+				<td>{{allposition[item.position]}}</td>
+				<td>
+					<a href="/admin/ad/mod/{{item.id}}" class="admin_edit mar3">修改</a>
+					<a href="/admin/ad/del/{{item.id}}" class="admin_del" onclick="return confirm('你确定要删除吗？')">删除</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+
+			<tr>
+				<td class="bgtt aleft" colspan="5"><input type="submit" name="do_submit" value="批量排序" class="tjbtn">
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+{% include("public/footer.html") %}

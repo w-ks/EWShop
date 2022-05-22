@@ -1,0 +1,38 @@
+{% include("public/header.html") %}
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">
+			<span class="fl">修改友情链接</span>
+			<span class="fr fabu"><a href="/admin/link/add">增加链接</a></span>
+		</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" action="/admin/link/doupdate">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+			<input type="hidden" name="id" value="{{link.id}}" />
+			<tr>
+				<td class="bg_f8" align="right" width="100">链接名称：</td>
+				<td><input type="text" name="name" value="{{link.name}}" class="inputall input300" /> <span
+						class="c888">(如：学习猿地)</span></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">链接地址：</td>
+				<td><input type="text" name="url" value="{{link.url}}" class="inputall input300" /> <span
+						class="c888">(如：https://www.lmonkey.com)</span></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">链接排序：</td>
+				<td><input type="text" name="ord" value="{{link.ord}}" class="inputall input50" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8">&nbsp;</td>
+				<td><input type="submit" value="提 交" class="tjbtn"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{% include("public/footer.html") %}

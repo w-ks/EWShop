@@ -1,0 +1,105 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">商品咨询</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="search">
+		<div class="fl qiehuan">
+			<a href="/admin/ask?state=0" {{get.state =='0' ? 'class="sel"' : ''}}>待回复咨询</a>
+			<a href="/admin/ask?state=1" {{get.state =='1' ? 'class="sel"' : ''}}>已回复咨询</a>
+		</div>
+		<div class="fr searbox">
+			<form method="get">
+				<input type="hidden" name="state" value="{{get.state}}" />
+				商品名称：<input type="text" name="name" value="{{get.name}}" class="inputtext inputtext_150" />
+				咨询详情：<input type="text" name="asktext" value="{{get.asktext}}" class="inputtext inputtext_150" />
+				用户名：<input type="text" name="uname" size="10" value="{{get.uname}}" class="inputtext" />
+				<input type="submit" value="搜索" class="input2 tjbtn" />
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" id="form" action="/admin/ask/alldel">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+			<tr>
+				<td class="bgtt" width="10"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" />
+				</td>
+				<td class="bgtt" width="60">ID号</td>
+				<td class="bgtt">咨询详情</td>
+				<td class="bgtt" width="100">用户名</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+			{% for v in data %}
+
+			<tr>
+				<td><input type="checkbox" name="id[]" value="{{v.id}}" /></td>
+				<td>{{v.id}}</td>
+				<td class="aleft">
+					<a href="/product/{{v.pid}}" target="_blank" class="fl mat3" style="border:1px solid #ddd"><img
+							src="{{res}}/product/{{v.logo}}" width="60" height="60"></a>
+					<div class="fl" style="width:530px;margin-left:15px; display:inline;">
+						<p><a href="/product/{{v.pid}}" target="_blank" class="cblue font13">{{v.name}}</a></p>
+						<p class="c333 mat5 font13">[{{v.atime|date('Y-m-d H:i')}}]咨询：{{v.asktext}}</p>
+						{% if v.replytext !=null %}
+						<div class="cred mat5 font13">
+							<strong class="corg">回复：</strong> [{{v.replytime|date('Y-m-d H:i')}}] <br>
+							<div class="mat5">{{v.replytext}}</div>
+						</div>
+						{% endif %}
+
+					</div>
+				</td>
+				<td>{{v.uname}}</td>
+				<td>
+					<a href="/admin/ask/reply/{{v.id}}" class="admin_edit mar3">回复</a>
+					<a href="/admin/ask/del/{{v.id}}" class="admin_del" onclick="return confirm('你确定要删除吗？')">删除</a>
+				</td>
+			</tr>
+			{% endfor %}
+
+			<tr>
+
+				<td class="bgtt" align="center"><input type="checkbox" name="checkall"
+						onclick="bro_checkall(this, 'id')" /></td>
+				<td class="bgtt" colspan="1">
+					<span class="fl"><button href="/admin/ask/alldel"
+							onclick="return bro_cfall(this, 'id', 'form', '批量删除')">批量删除</button></span>
+				</td>
+
+				<td class="bgtt" style="text-align: right" colspan="3">
+					<style>
+						ul.pagination {
+							margin-top: 5px;
+							display: inline-block;
+						}
+
+						.pagination li {
+							padding: 2px 10px;
+							float: left;
+							margin: 0 5px;
+							background: white;
+						}
+
+						.pagination .active {
+							background: lightskyblue;
+						}
+					</style>
+
+					{% autoescape false %}
+					{{fpage}}
+					{% endautoescape %}
+
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+
+{% include("public/footer.html") %}

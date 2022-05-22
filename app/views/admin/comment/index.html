@@ -1,0 +1,93 @@
+{% include("public/header.html") %}
+
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">商品评价</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="search">
+		<div class="fr searbox">
+			<form method="get">
+
+				商品名称：<input type="text" name="name" value="{{get.name}}" class="inputtext inputtext_150" />
+				评价详情：<input type="text" name="content" value="{{get.content}}" class="inputtext inputtext_150" />
+				用户名：<input type="text" name="uname" value="{{get.uname}}" class="inputtext inputtext_100" />
+				<input type="submit" value="搜索" class="input2 tjbtn" />
+			</form>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" id="form">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list">
+			<tr>
+				<td class="bgtt" width="10"><input type="checkbox" name="checkall" onclick="bro_checkall(this, 'id')" />
+				</td>
+				<td class="bgtt" width="70">ID号</td>
+				<td class="bgtt">评价详情</td>
+				<td class="bgtt" width="100">用户名</td>
+				<td class="bgtt" width="88">操作</td>
+			</tr>
+
+			{% for v in data %}
+			<tr>
+				<td><input type="checkbox" name="id[]" value="{{v.id}}" /></td>
+				<td>{{v.id}}</td>
+				<td class="aleft">
+					<a href="/product/{{v.pid}}" target="_blank" class="fl mat3" style="border:1px solid #ddd"><img
+							src="{{res}}/product/{{v.logo}}" width="60" height="60"></a>
+					<div class="fl" style="width:530px;margin-left:15px; display:inline;">
+						<p><a href="/product/896" target="_blank" class="cblue font14">{{v.name}}</a></p>
+						<p class="c333 mat5 font13">[{{v.atime|date('Y-m-d H:i')}}]评价：{{v.content}}</p>
+
+					</div>
+				</td>
+				<td>{{v.uname}}</td>
+				<td>
+					<a href="/admin/comment/mod/{{v.id}}" class="admin_edit mar3">修改</a>
+					<a href="/admin/comment/del/{{v.id}}" class="admin_del" onclick="return confirm('你确定要删除吗？')">删除</a>
+				</td>
+			</tr>
+			{% endfor %}
+
+			<tr>
+				<td class="bgtt" align="center"><input type="checkbox" name="checkall"
+						onclick="bro_checkall(this, 'id')" /></td>
+				<td class="bgtt" colspan="1">
+					<span class="fl"><button href="/admin/comment/alldel"
+							onclick="return bro_cfall(this, 'id', 'form', '批量删除')">批量删除</button></span>
+
+				</td>
+				<td class="bgtt" style="text-align: right" colspan="3">
+					<style>
+						ul.pagination {
+							margin-top: 5px;
+							display: inline-block;
+						}
+
+						.pagination li {
+							padding: 2px 10px;
+							float: left;
+							margin: 0 5px;
+							background: white;
+						}
+
+						.pagination .active {
+							background: lightskyblue;
+						}
+					</style>
+
+					{% autoescape false %}
+					{{fpage}}
+					{% endautoescape %}
+
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{% include("public/footer.html") %}

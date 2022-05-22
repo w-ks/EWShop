@@ -1,0 +1,225 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="huiyuan_main">
+		<h3 class="hy_rtt c666">订单编号： {{id}}</h3>
+		<div class="mat5 font13 zt">
+			<p class="c666"><span class="font12">{{atime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">订单创建成功</span>，订单编号：{{id}}
+			</p>
+
+			{# 货到付款 #}
+			{% if payway == 3 %}
+			{% if state == 1 %}
+			<p class="cred mat5 font12">等待卖家发货</p>
+			<a class="shouhuo_btn" href="/admin/order/state/3?id={{id}}"
+				onclick="return bro_dialog(this, '填写快递信息')">发货</a>
+
+			{% elseif state == 3 %}
+			<p class="c666 mat5"><span class="font12">{{stime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">卖家已经发货</span>，快递单号：{{wlid}} （
+				{% if wlname != null %} {{wlname}} {% else %} 无需快递 {% endif %}）
+			</p>
+
+			<p class="c666 mat5">等待买家付款
+				<a class="pay_btn" href="/admin/order/state/2?id={{id}}" onclick="return confirm('确定已经付款了吗?')">付款</a>
+			</p>
+
+			{% elseif state == 4 %}
+
+			<p class="c666 mat5"><span class="font12">{{stime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">卖家已经发货</span>，快递单号：{{wlid}} （
+				{% if wlname != null %} {{wlname}} {% else %} 无需快递 {% endif %}）
+			</p>
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">买家付款成功</span>，支付金额：{{money}}元</p>
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen strong">订单交易成功，欢迎下次光临！</span></p>
+
+			{% endif %}
+
+			{# 转账付款,先款后货 #}
+			{% elseif payway == 2 %}
+			{% if state == 1 %}
+			<p class="c666 mat5">等待买家付款
+				<a class="pay_btn" href="/admin/order/state/2?id={{id}}" onclick="return confirm('确定已经付款了吗?')">付款</a>
+			</p>
+
+			{% elseif state == 2 %}
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">买家付款成功</span>，支付金额：{{money}}元</p>
+			<p class="cred mat5 font12">等待卖家发货</p>
+			<a class="shouhuo_btn" href="/admin/order/state/3?id={{id}}"
+				onclick="return bro_dialog(this, '填写快递信息')">发货</a>
+
+			{% elseif state == 3 %}
+
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">买家付款成功</span>，支付金额：{{money}}元</p>
+			<p class="c666 mat5"><span class="font12">{{stime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">卖家已经发货</span>，快递单号：{{wlid}} （
+				{% if wlname != null %} {{wlname}} {% else %} 无需快递 {% endif %}）
+			</p>
+			<p class="cred mat5 font12">等待买家确认</p>
+
+			{% elseif state == 4 %}
+
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+				class="cgreen">买家付款成功</span>，支付金额：{{money}}元</p>
+			<p class="c666 mat5"><span class="font12">{{stime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen">卖家已经发货</span>，快递单号：{{wlid}} （
+				{% if wlname != null %} {{wlname}} {% else %} 无需快递 {% endif %}）
+			</p>
+			<p class="c666 mat5"><span class="font12">{{ptime|date('Y-m-d H:i')}}：</span><span
+					class="cgreen strong">订单交易成功，欢迎下次光临！</span></p>
+
+			{% endif %}
+
+			{# 支付宝付款 #}
+			{% elseif payway == 1 %}
+
+			{% endif %}
+
+			<div class="clear"></div>
+		</div>
+		<form method="post" action="/admin/order/doupdate">
+			<input type="hidden" name="id" value="{{id}}">
+			<div class="hy_table" style="margin-top:10px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="hy_tb_tt1">
+					<tr>
+						<td class="bg_f8 font12" width="">商品详情</td>
+						<td class="bg_f8 font12" width="120">商品单价(元)</td>
+						<td class="bg_f8 font12" width="120">购买数量</td>
+					</tr>
+				</table>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-left:1px solid #ddd;">
+					{% for v in product_list%}
+
+					<tr>
+						<td style="text-align:left;">
+							<div class="dingdan_list">
+								<a href="/product/{{v.pid}}" target="_blank" class="fl mar5"><img
+										src="{{res}}/product/{{v.plogo}}" width="45" height="45"></a>
+								<div class="fl font12">
+									<a href="/product/{{v.pid}}" title="{{v.pname}}" target="_blank"
+										class="cblue dd_name">{{v.pname}}</a>
+
+								</div>
+								<div class="clear"></div>
+							</div>
+						</td>
+						<td width="110"><span class="num strong font14"><small>￥</small> {{v.pmoney}}</span></td>
+						<td width="100"><span class="num font14">{{v.pnum}}</span></td>
+					</tr>
+
+					{% endfor %}
+
+				</table>
+				<div class="ddxq_je font13">
+					{% if state != 1 %}
+					应付总额：<span class="strong num1 font18 cred strong" id="order_money">{{money}}</span>(元) ＝
+					<span class="font14 cred num strong">{{productmoney}}</span>(商品总额)
+					＋ <span class="font14 cred num strong">{{wlmoney}}</span>(运费)
+					{% else %}
+					应付总额：<span class="strong num1 font18 cred strong" id="order_money">{{money}}</span>(元) ＝
+					<input name="productmoney" value="{{productmoney}}" class="inputtext input 80" />(商品总额)
+					＋
+					<input name="wlmoney" value="{{wlmoney}}" class="inputtext input 60" />(运费)
+					{% endif %}
+				</div>
+			</div>
+			<div class="hy_table3">
+				<h3>收货信息</h3>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td style="text-align:right" width="105">会员帐号：</td>
+						<td style="text-align:left">{% if uid !=0 %} {{uname}} (ID: {{uid}}) {% else %} <span
+								class="c888">未登录用户</span> {% endif %}</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">付款方式：</td>
+						<td style="text-align:left">
+							{% if state == 1 %}
+							<select name="payway" id="" class="inputselect">
+								{% for k,v in cache_payway %}
+								<option value="{{k}}" {{k==payway ? 'selected' : '' }}>{{v.name}}</option>
+								{% endfor %}
+							</select>
+							{% else %}
+
+
+							{{paywayarr[payway]}}
+
+							{% endif %}
+
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">收货姓名：</td>
+						<td style="text-align:left">
+							{% if state == 4 %}
+							{{utname}}
+							{% else %}
+							<input type="text" name="utname" value="{{utname}}" class="inputall input150">
+							{% endif %}
+
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">联系电话：</td>
+						<td style="text-align:left">
+							{% if state == 4 %}
+							{{uphone}}
+							{% else %}
+							<input type="text" name="uphone" value="{{uphone}}" class="inputall input150">
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">收货地址：</td>
+						<td style="text-align:left" colspan="3">
+							{% if state == 4 %}
+							{{uaddress}}
+							{% else %}
+							<input type="text" name="uaddress" value="{{uaddress}}" class="inputall input500">
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">买家留言：</td>
+						<td style="text-align:left" colspan="3">
+							{{content}}
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			{% if state != 4 %}
+			<div class="mat10 center">
+				<input type="submit" name="do_submit" value="修 改" class="tjbtn">
+			</div>
+			{% endif %}
+
+		</form>
+	</div>
+	<div class="clear"></div>
+</div>
+<script charset="utf-8" src="{{public}}/js/plugin/artdialog/jquery.artDialog.js?skin=chrome"></script>
+<script charset="utf-8" src="{{public}}/js/plugin/artdialog/plugins/iframeTools.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$(":input[name='productmoney']").add(":input[name='wlmoney']").keyup(function () {
+			var order_productmoney = parseFloat($(":input[name='productmoney']").val());
+			var order_wlmoney = parseFloat($(":input[name='wlmoney'").val());
+			if (isNaN(order_productmoney)) {
+				order_productmoney = 0;
+			}
+			if (isNaN(order_wlmoney)) {
+				order_wlmoney = 0;
+			}
+			$("#order_money").html(order_productmoney + order_wlmoney);
+		})
+	})
+</script>
+{% include("public/footer.html") %}

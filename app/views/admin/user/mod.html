@@ -1,0 +1,55 @@
+{% include("public/header.html") %}
+
+
+<div class="right">
+	<div class="now">
+		<div class="now_l"></div>
+		<div class="now_m">修改用户</div>
+		<div class="now_r"></div>
+		<div class="clear"></div>
+	</div>
+	<form method="post" action="/admin/user/doupdate">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="wenzhang">
+			<input type="hidden" name="id" value="{{id}}">
+			<tr>
+				<td class="bg_f8" align="right" width="100">用 户 名：</td>
+				<td>{{name}}</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">密　　码：</td>
+				<td><input type="password" name="pw" class="inputall input200" autocomplete="off" /> <span
+						class="c888">如无需修改请留空</span></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">收货地址：</td>
+				<td><input type="text" name="address" value="{{address}}" class="inputall input400" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">收货姓名：</td>
+				<td><input type="text" name="tname" value="{{tname}}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">联系电话：</td>
+				<td><input type="text" name="phone" value="{{phone}}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">常用邮箱：</td>
+				<td><input type="text" name="email" value="{{email}}" class="inputall input200" /></td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">注册日期：</td>
+				<td>{{atime|date("Y-m-d")}}</td>
+			</tr>
+			<tr>
+				<td class="bg_f8" align="right">上次登录：</td>
+				<td>{{ltime|date("Y-m-d")}}</td>
+			</tr>
+			<tr>
+				<td class="bg_f8">&nbsp;</td>
+				<td><input type="submit"  value="提 交" class="tjbtn" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+{% include("public/footer.html") %}
